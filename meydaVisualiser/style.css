@@ -1,0 +1,9 @@
+#canvas-container {
+    position: relative;
+  }
+  
+  .spectrum-canvas {
+    position: absolute;
+    top: 20px; /* Adjust the top positioning according to your needs */
+    left: 20px; /* Adjust the left positioning according to your needs */
+  }
