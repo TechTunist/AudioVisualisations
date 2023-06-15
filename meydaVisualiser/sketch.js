@@ -47,12 +47,11 @@ function setup() {
   playStopButton.mousePressed(playStopSound);
 
   fft = new p5.FFT(0.2, 2048);
-
 }
 
 function draw() {
 
-  if (elapsedTime > 4000){
+  if (elapsedTime > 700){
     bgColor = 0;
   } else {
     bgColor = 255;
@@ -64,10 +63,8 @@ function draw() {
   // Draw a semi-transparent background over the top to enable trails
   fill(bgColor, 155, 255 - bgColor, 20);
   rect(0, 0, width, height);
-
-  
-  
-
+  push();
+  noStroke();
   // Use lerp to smoothly change circle size
   circleSize = lerp(circleSize, targetCircleSize, lerpSpeed);
   
@@ -82,8 +79,10 @@ function draw() {
     circle((i + 0.5) * width / circlePos.length, height - circlePos[i], circleSize/4);
 
     // draw the temporary circle flashes
+
     for (let i = specialCircles.length - 1; i >= 0; i--) {
       let sc = specialCircles[i];
+      sc.y -= 10;
       fill(0,255,0, sc.lifespan);
       circle(sc.x, sc.y, sc.size);
       sc.lifespan -= 2;
@@ -91,7 +90,9 @@ function draw() {
         specialCircles.splice(i, 1); // Remove the circle when its lifespan is over
       }
     }
+    
   }
+  pop();
 
   // draw the EKG line
   push();
@@ -173,9 +174,9 @@ function playStopSound(){
           if (features.spectralCentroid > 60) {
             specialCircles.push({
               x: (highestChromaIndex + 0.5) * width / circlePos.length,
-              y: height - circlePos[highestChromaIndex] - 60,
+              y: height - circlePos[highestChromaIndex],
               size: 20,
-              lifespan: 500,
+              lifespan: 50,
             });
           }
         }
